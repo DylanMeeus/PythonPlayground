@@ -18,10 +18,9 @@ def solve():
     steps = 0
     while(i < len(input)):
         jmp = input[i]
-        if jmp >= 3:
-            input[i] = jmp - 1
-        else:
-            input[i] = jmp + 1
+        input[i] = jmp + 1
+        if jmp >= 3:            # Check for part2 of day5. Run without check for part 1
+            input[i] = jmp - 1 
         
         i += jmp
         steps += 1
