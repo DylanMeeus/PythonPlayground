@@ -18,7 +18,11 @@ def solve():
     steps = 0
     while(i < len(input)):
         jmp = input[i]
-        input[i] = jmp + 1
+        if jmp >= 3:
+            input[i] = jmp - 1
+        else:
+            input[i] = jmp + 1
+        
         i += jmp
         steps += 1
 
