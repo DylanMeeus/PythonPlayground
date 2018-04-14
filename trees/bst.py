@@ -43,7 +43,6 @@ class tree:
         elif value > node.value:
             return self._find(node.right, value)
 
-        return False
 
     def pre_order_print(self):
         self._pre_order_print(self.root)
@@ -70,5 +69,5 @@ if __name__ == '__main__':
     t.append(node(6))
     t.append(node(15))
     t.pre_order_print()
-    print(t.find(6))
+    print(t.find(16))
 
