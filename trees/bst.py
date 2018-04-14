@@ -28,19 +28,33 @@ class tree:
         return node
 
 
+    def find(self, value):
+        if self.root != None:
+            return self._find(self.root, value)
+
+    def _find(self, node, value):
+        if node.value == value:
+            return true
+
+        if value < node.value:
+            return self._find(node.left, value)
+        elif value > node.value:
+            return self.find(node.right, value)
+
+        return false
 
     def pre_order_print(self):
-        self.pre_order_print(self.root)
+        self._pre_order_print(self.root)
 
     # recursive function to print the tree
     def _pre_order_print(self, node):
         print(node.value)
 
         if node.left != None:
-            self.pre_order_print(node.left)
+            self._pre_order_print(node.left)
 
         if node.right != None:
-            self.pre_order_print(node.right)
+            self._pre_order_print(node.right)
            
 
         
