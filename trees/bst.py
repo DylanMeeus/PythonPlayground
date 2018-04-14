@@ -33,15 +33,17 @@ class tree:
             return self._find(self.root, value)
 
     def _find(self, node, value):
+        if node == None:
+            return False
         if node.value == value:
-            return true
+            return True
 
         if value < node.value:
             return self._find(node.left, value)
         elif value > node.value:
-            return self.find(node.right, value)
+            return self._find(node.right, value)
 
-        return false
+        return False
 
     def pre_order_print(self):
         self._pre_order_print(self.root)
@@ -68,4 +70,5 @@ if __name__ == '__main__':
     t.append(node(6))
     t.append(node(15))
     t.pre_order_print()
+    print(t.find(6))
 
