@@ -17,11 +17,13 @@ class LinkedList():
     def __init__(self):
         self.root = None
         self.leaf = None
+        self.current = None # iterator state
 
     def append(self, value):
         if self.root == None:
             self.root = Node(value) 
             self.leaf = self.root 
+            self.current = self.root
         else:
             new_node = Node(value)
             current_leaf = self.leaf
@@ -37,6 +39,15 @@ class LinkedList():
             node = node.next
         return content
 
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.current == None:
+            raise StopIteration
+        cur = self.current.value
+        self.current = self.current.next
+        return cur
 
 
 
@@ -45,6 +56,6 @@ if __name__ == '__main__':
     lst = LinkedList()
     lst.append(1)
     lst.append(3)
-    print(lst)
-    print("done")
+    for v in lst:
+        print(v)
 
