@@ -28,7 +28,7 @@ def solve(board: Board) -> 'Board':
 
 
 def solve() -> 'Board':
-    board = Board(8) # Demo for the original 8x8
+    board = Board(8) # Demo for the original 8x8 
     print(board)
     cb = board.add_queen(0,0)
     print(cb)
