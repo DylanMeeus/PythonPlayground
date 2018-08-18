@@ -23,13 +23,28 @@ class Board:
         return Board(self._size, copy_board, copy_queens)
 
 
+
+    def valid_diagonal(self, this, that):
+        this_x = this[0]
+        this_y = this[1]
+        that_x = that[0]
+        that_y = that[1]
+        if abs(that_y - this_y) == abs(that_x - this_x):
+            return False
+        return True
+
+
     def valid(self) -> 'boolean':
         for queen in self._queens:
-            for other_queen in list(filter(lambda q: q != queen, self._queens)):
-                # todo: horizontal check
+            other_queens = list(filter(lambda q: q != queen, self._queens))
+            if len(self._queens) != (len(other_queens)+1):
+                return False
+            for other_queen in other_queens: 
                 if queen[0] == other_queen[0]:
                     return False
                 if queen[1] == other_queen[1]:
+                    return False
+                if not self.valid_diagonal(queen, other_queen):
                     return False
         return True
 
@@ -42,25 +57,41 @@ class Board:
         return ret
                 
 # go from an int to a (x,y) tuple for the next_queen
-def _solve(board: Board, next_queen: int) -> 'Board':
-    queen_x = next_queen // 8
-    queen_y = next_queen % 8
-    next_board = board.add_queen(queen_x, queen_y)
-    print(next_board)
-    print(board)
-    if len(next_board._queens) == 8 and next_board.valid():
-        print("found solution..")
-        print(next_board)
-        exit(0)
-    if next_board.valid():
-        return _solve(next_board, next_queen + 1)
-    return _solve(board, next_queen + 1)
+def _solve(board: Board, col: int) -> 'Board':
+    if len(board._queens) == 8:
+        return True
+    if col >= 8:
+        return False
+    else:
+        for row in range(8):
+            if board.add_queen(col, row).valid():
+                # place queen
+                next_board = board.add_queen(col, row)
+                # solve nextcol
+                if _solve(next_board, col + 1):
+                    print(next_board)
+                    exit(0)
+                    return True
+                else:
+                    # no solution found here!
+                    pass
+
+        
+        #No matching row found for col
+        return False
+
+
 
 
 
 def solve() -> 'Board':
     board = Board(8) # Demo for the original 8x8 
-    _solve(board, 0)
+    for i in range(8):
+        solution = _solve(board, i)
+        if solution:
+            print("solution found!")
+
+
 
 
 if __name__ == '__main__':
