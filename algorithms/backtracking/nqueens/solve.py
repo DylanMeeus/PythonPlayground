@@ -76,7 +76,7 @@ def _solve(board: Board, col: int) -> 'Board':
 
 def solve() -> 'Board':
     board = Board(8) # Demo for the original 8x8 
-    for i:int in range(board._size):
+    for i in range(board._size):
         solution = _solve(board, i)
 
 if __name__ == '__main__':
