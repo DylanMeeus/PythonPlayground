@@ -51,8 +51,7 @@ class Board:
             ret += "\n"
         return ret
                 
-# go from an int to a (x,y) tuple for the next_queen
-def _solve(board: Board, col: int) -> 'Board':
+def _solve(board: Board, col: int) -> 'boolean':
     if len(board._queens) == board._size:
         return True
     if col >= board._size: # we overstepped our columns
@@ -75,7 +74,7 @@ def _solve(board: Board, col: int) -> 'Board':
 
 
 def solve() -> 'Board':
-    board = Board(8) # Demo for the original 8x8 
+    board = Board(20) # Demo for the original 8x8 
     for i in range(board._size):
         solution = _solve(board, i)
 
