@@ -28,9 +28,11 @@ def bubble_sort(numbers: [int]) -> '[[int]]':
 
 def create_colour_map(numbers: [int]) -> '{int, (int,int,int)}':
     colour_map = {}
+    min_c = 100
+    max_c = 250
     for num in numbers:
         if num not in colour_map.keys():
-            colour_map[num] = (randint(0,255), randint(0,255), randint(0,255))
+            colour_map[num] = (randint(min_c,max_c), randint(min_c,max_c), randint(min_c,max_c))
     return colour_map
 
 if __name__ == '__main__':
@@ -47,7 +49,6 @@ if __name__ == '__main__':
     for a in stepped_array:
         x = 0
         y = y + radius + spacing 
-        print(y)
         for i in range(len(a)):
             x = x + radius + spacing 
             colour = colour_map[a[i]] 
