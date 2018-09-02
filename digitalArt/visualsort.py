@@ -4,6 +4,43 @@ import pygame
 from random import randint
 from numba import jit
 
+################# MERGE SORT #############################
+
+@jit
+def merge_sort_step(numbers: [int], intermediate_values: [int] = []) -> '([int], [int])':
+    # split numbers into sublists, compare and merge these
+    if len(numbers) <= 1:
+        return (numbers, intermediate_values)
+    left = []
+    right = []
+    for i in range(len(numbers)):
+        if i < len(numbers) // 2:
+            left.append(numbers[i])
+        else:
+            right.append(numbers[i])
+    left = merge_sort_step(left, intermediate_values)[0]
+    right = merge_sort_step(right, intermediate_values)[0]
+    merged = merge(left, right)
+    intermediate_values.append(merged)
+    return (merged, intermediate_values)
+
+# we don't need to manually do the merge here, we care about the result not the intermediate values
+def merge(left: [int], right: [int]) -> '[int]':
+    if left != None and right != None:
+        left.extend(right)
+        return sorted(left)
+    else:
+        return sorted(left) if right == None else sorted(right)
+
+
+def merge_sort(numbers: [int]):
+    return merge_sort_step(numbers)[1]
+
+
+
+
+################ END MERGE SORT ###########################
+################# BUBBLE SORT #############################
 @jit
 def bubble_sort_step(numbers: [int]) -> '[int]':
     """ one step in the sorting algorithm, returns a slightly more ordened list """
@@ -16,6 +53,18 @@ def bubble_sort_step(numbers: [int]) -> '[int]':
             numbers[i+1] = b
     return numbers
 
+
+@jit
+def bubble_sort(numbers: [int]) -> '[[int]]':
+    expected_result = sorted(numbers)
+    current_sequence = numbers
+    results = [current_sequence]
+    while expected_result not in results:
+        results.append(bubble_sort_step(results[len(results)-1]))
+    return results
+
+################# END BUBBLE SORT ##########################
+################## INSERTION SORT ##########################
 
 @jit
 def insertion_sort_step(numbers: [int]) -> '[int]':
@@ -38,15 +87,7 @@ def insertion_sort_step(numbers: [int]) -> '[int]':
 def insertion_sort(numbers: [int]) -> '[int]':
     return insertion_sort_step(numbers)
 
-@jit
-def sort(numbers: [int]) -> '[[int]]':
-    expected_result = sorted(numbers)
-    current_sequence = numbers
-    results = [current_sequence]
-    while expected_result not in results:
-        results.append(bubble_sort_step(results[len(results)-1]))
-    return results
-
+################# END INSERTION SORT #########################
 def create_colour_map(numbers: [int]) -> '{int, (int,int,int)}':
     colour_map = {}
     min_c = 100
@@ -81,7 +122,7 @@ def pygame_draw(array, stepped_array: [[int]]) -> 'None':
 if __name__ == '__main__':
     print("calculating..")
     array = [randint(0,10) for x in range(0,60)] 
-    stepped_array = insertion_sort(array)
+    stepped_array = merge_sort(array)
     print("done sorting, time to draw!")
     pygame_draw(array, stepped_array)
     print("done, waiting for exit")
