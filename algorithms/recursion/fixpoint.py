@@ -10,11 +10,10 @@ def fib(a, b, out, lim, func):
 
 
 def func(f):
-    """ fixpoint function """
-    return lambda a,b,c,d: f(a,b,c,d,func(f))
-
+    return lambda *a: f(*a, func(f))
 
 if __name__ == '__main__':
     fib_function = func(fib)
     fibs = fib_function(0,1,[], 100)
     print(fibs)
+
