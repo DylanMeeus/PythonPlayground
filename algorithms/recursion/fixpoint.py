@@ -1,6 +1,5 @@
 """ test of the fixpoint algorithm """
 
-# recurisive
 def fib(a, b, out, lim, func):
     if a > lim:
         return out
